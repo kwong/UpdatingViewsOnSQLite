@@ -1,0 +1,87 @@
+insert into chr123 (empid, name, deptid, title, address, salary) values(200, 'Chris Chong', 'MK', 'Accountant', '20 Kent Ridge Rd', 3400);
+create view chr123 as select * from employee where salary > 1000;
+
+
+delete from chr123 where empid=17 or empid=18;
+
+
+create view chr142 as select employee.empid, educationdetails.education, employee.name from employee inner join educationdetails on employee.empid=educationdetails.empid;
+insert into chr142 (empid, name) values (9000, 'Bom Pi Pi');
+
+create view chr146 as select employee.empid, educationdetails.education, employee.name, employee.salary from employee inner join educationdetails on employee.empid=educationdetails.empid;
+
+create view chr150 as select * from employee inner join educationdetails on employee.empid=educationdetails.empid;
+insert into chr150 (empid, name, salary, education) values (2000, 'testt 2000', 2000, 'singapore poly');
+
+
+
+create view chr123 as select * from employee where salary > 1000 and empid>10;
+
+update chr123 set salary=4000 where empid<=14;
+insert into chr123 (empid, title) values (19, 'Tester Man');
+
+
+create view chr150 as select * from employee inner join spousedetails on employee.empid=spousedetails.empid where employee.empid>3 and salary < 6000;
+
+
+create view chr123 as select empid, name, salary from employee where salary > 1000;
+insert into chr123 (empid, name) values (50000, 'Geez Lee');
+
+
+
+create view chr142 as select employee.empid, spousedetails.anniversary, employee.name from employee inner join spousedetails on employee.empid=spousedetails.empid;
+
+create view chr142 as select employee.empid, spousedetails.anniversary, spousedetails.spousename, employee.name from employee inner join spousedetails on employee.empid=spousedetails.empid where employee.empid<100;
+update chr142 set empid=76, spousename='Goh Chok Tong' where empid=76;
+
+---------------------------------------------------------------------------------
+
+
+create view chr123 as select empid, name, salary from employee;
+create view chr124 as select empid, name, salary from employee where salary > 1000;
+
+create view chr125 as select employee.empid, spousedetails.anniversary, spousedetails.spousename, employee.name from employee inner join spousedetails on employee.empid=spousedetails.empid where employee.empid<100;
+create view chr126 as select * from employee inner join spousedetails on employee.empid=spousedetails.empid where employee.empid<100;
+
+
+X update chr125 set empid=17 where spousename='Alan Heng';
+----------------------------------------------------------------------------------
+
+W/O Join +++++++++++++++++++++++++++++++++++++++
+
+// Test for Violation of predicates when inserting 
+
+create view chr123 as select empid, name, salary from employee where salary > 2000;
+
+Select * from chr123;
+
+insert into chr123  (empid, name, salary) values (17,'Doddle Jump',2200); 
+
+insert into chr123 (empid, name, salary) values (18,'Jack Rad',1400);
+
+
+// Test for violation of updating
+
+update chr123 set salary=1000 where empid = 17;
+
+update chr123 set salary=3000 where empid = 17;
+
+// Test for deletion 
+
+delete from chr123 where empid;
+
+JOIN +++++++++++++++++++++++++++++++++++++++++++++++
+
+// Test for violation of predicates when inserting to JOIN
+
+create view chr150 as select * from employee inner join spousedetails on employee.empid=spousedetails.empid;
+
+select * from chr150;
+
+insert into chr150 (empid,name,dept,title,address, salary)
+values(20,'Henderson Waves','SA','Sales Manager','King George Road #10',3400);
+
+update chr150 set spousename='Alice Lim',anniversary='1/1/2001',birthday='2/2/1988' 
+where empid = 20;
+
+// update 
